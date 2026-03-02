@@ -1,0 +1,6 @@
+requests==2.31.0
+flask>=3.0
+pandas
+numpy~=1.24
+# This is a comment
+pytest>=7.0
