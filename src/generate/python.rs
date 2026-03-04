@@ -129,6 +129,7 @@ pub fn parse_python_reference(content: &str) -> Vec<ReferenceEntry> {
                             signature: trimmed.to_string(),
                             description: String::new(),
                             section: current_section.clone(),
+                            ..Default::default()
                         });
                     }
                 }
@@ -149,6 +150,7 @@ pub fn parse_python_reference(content: &str) -> Vec<ReferenceEntry> {
                     signature: trimmed.to_string(),
                     description: String::new(),
                     section: current_section.clone(),
+                            ..Default::default()
                 });
             }
             continue;
@@ -172,6 +174,7 @@ pub fn parse_python_reference(content: &str) -> Vec<ReferenceEntry> {
                 signature: trimmed.to_string(),
                 description: String::new(),
                 section: current_section.clone(),
+                            ..Default::default()
             });
             continue;
         }
@@ -195,6 +198,7 @@ pub fn parse_python_reference(content: &str) -> Vec<ReferenceEntry> {
                     signature: trimmed.to_string(),
                     description: String::new(),
                     section: current_section.clone(),
+                            ..Default::default()
                 });
             }
             continue;
@@ -209,6 +213,7 @@ pub fn parse_python_reference(content: &str) -> Vec<ReferenceEntry> {
                     signature: trimmed.to_string(),
                     description: String::new(),
                     section: current_section.clone(),
+                            ..Default::default()
                 });
                 continue;
             }
@@ -223,6 +228,7 @@ pub fn parse_python_reference(content: &str) -> Vec<ReferenceEntry> {
                     signature: trimmed.to_string(),
                     description: String::new(),
                     section: current_section.clone(),
+                            ..Default::default()
                 });
             }
         }

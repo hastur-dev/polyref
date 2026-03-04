@@ -1,0 +1,10 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|NotebookEdit",
+        "command": "bash scripts/post-write-audit.sh"
+      }
+    ]
+  }
+}

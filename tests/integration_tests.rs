@@ -386,6 +386,7 @@ fn test_e2e_issues_exit_nonzero() {
                 signature: "def good_func(x: int) -> int: ...".to_string(),
                 description: String::new(),
                 section: String::new(),
+                            ..Default::default()
             },
         ],
         raw_content: String::new(),

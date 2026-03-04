@@ -1,0 +1,72 @@
+# ============================================================
+# Library: requests
+# Version: 2.32
+# Lang: python
+# ============================================================
+@lang python
+
+@module requests
+@module requests.auth
+@module requests.exceptions
+
+@class Session {
+    @method get(url: str, **kwargs) -> Response  [min_args=1, max_args=1]
+    @method post(url: str, data=None, json=None, **kwargs) -> Response  [min_args=1]
+    @method put(url: str, data=None, **kwargs) -> Response  [min_args=1]
+    @method delete(url: str, **kwargs) -> Response  [min_args=1]
+    @method head(url: str, **kwargs) -> Response  [min_args=1]
+    @method options(url: str, **kwargs) -> Response  [min_args=1]
+    @method patch(url: str, data=None, **kwargs) -> Response  [min_args=1]
+    @method request(method: str, url: str, **kwargs) -> Response  [min_args=2]
+    @method send(request: PreparedRequest, **kwargs) -> Response  [min_args=1]
+    @method mount(prefix: str, adapter: BaseAdapter) -> None  [min_args=2, max_args=2]
+    @method close() -> None  [min_args=0, max_args=0]
+    @field headers: MutableMapping
+    @field cookies: RequestsCookieJar
+    @field auth: tuple
+    @field proxies: dict
+    @field verify: bool
+    @field cert: str
+}
+
+@class Response {
+    @method json(**kwargs) -> Any  [min_args=0]
+    @method raise_for_status() -> None  [min_args=0, max_args=0]
+    @method iter_content(chunk_size=1) -> Iterator  [min_args=0]
+    @method iter_lines(chunk_size=512, decode_unicode=False) -> Iterator  [min_args=0]
+    @field text: str
+    @field content: bytes
+    @field status_code: int
+    @field headers: CaseInsensitiveDict
+    @field url: str
+    @field ok: bool
+    @field encoding: str
+    @field cookies: RequestsCookieJar
+    @field elapsed: timedelta
+    @field reason: str
+    @field request: PreparedRequest
+}
+
+@class PreparedRequest {
+    @method prepare(method: str, url: str, headers=None, files=None, data=None, params=None, auth=None, cookies=None, hooks=None, json=None) -> None  [min_args=2]
+    @field method: str
+    @field url: str
+    @field headers: CaseInsensitiveDict
+    @field body: bytes
+}
+
+@fn get(url: str, **kwargs) -> Response  [min_args=1]
+@fn post(url: str, data=None, json=None, **kwargs) -> Response  [min_args=1]
+@fn put(url: str, **kwargs) -> Response  [min_args=1]
+@fn delete(url: str, **kwargs) -> Response  [min_args=1]
+@fn head(url: str, **kwargs) -> Response  [min_args=1]
+@fn options(url: str, **kwargs) -> Response  [min_args=1]
+@fn patch(url: str, **kwargs) -> Response  [min_args=1]
+@fn request(method: str, url: str, **kwargs) -> Response  [min_args=2]
+
+@exception ConnectionError
+@exception Timeout
+@exception HTTPError
+@exception RequestException
+@exception URLRequired
+@exception TooManyRedirects

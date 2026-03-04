@@ -139,6 +139,7 @@ pub fn parse_typescript_reference(content: &str) -> Vec<ReferenceEntry> {
                                 signature: trimmed.to_string(),
                                 description: String::new(),
                                 section: current_section.clone(),
+                            ..Default::default()
                             });
                         }
                     }
@@ -172,6 +173,7 @@ pub fn parse_typescript_reference(content: &str) -> Vec<ReferenceEntry> {
                     signature: trimmed.to_string(),
                     description: String::new(),
                     section: current_section.clone(),
+                            ..Default::default()
                 });
             }
             continue;
@@ -190,6 +192,7 @@ pub fn parse_typescript_reference(content: &str) -> Vec<ReferenceEntry> {
                     signature: trimmed.to_string(),
                     description: String::new(),
                     section: current_section.clone(),
+                            ..Default::default()
                 });
             }
             continue;
@@ -207,6 +210,7 @@ pub fn parse_typescript_reference(content: &str) -> Vec<ReferenceEntry> {
                     signature: trimmed.to_string(),
                     description: String::new(),
                     section: current_section.clone(),
+                            ..Default::default()
                 });
             }
             continue;
@@ -225,6 +229,7 @@ pub fn parse_typescript_reference(content: &str) -> Vec<ReferenceEntry> {
                     signature: trimmed.to_string(),
                     description: String::new(),
                     section: current_section.clone(),
+                            ..Default::default()
                 });
             }
             continue;
@@ -244,6 +249,7 @@ pub fn parse_typescript_reference(content: &str) -> Vec<ReferenceEntry> {
                         signature: trimmed.to_string(),
                         description: String::new(),
                         section: current_section.clone(),
+                            ..Default::default()
                     });
                 }
             }
@@ -289,6 +295,7 @@ fn parse_ts_function(line: &str, section: &str) -> Option<ReferenceEntry> {
         signature: trimmed.to_string(),
         description: String::new(),
         section: section.to_string(),
+                            ..Default::default()
     })
 }
 
@@ -331,6 +338,7 @@ fn parse_ts_member(line: &str, section: &str) -> Option<ReferenceEntry> {
                     signature: trimmed.to_string(),
                     description: String::new(),
                     section: section.to_string(),
+                            ..Default::default()
                 });
             }
             return None;
@@ -342,6 +350,7 @@ fn parse_ts_member(line: &str, section: &str) -> Option<ReferenceEntry> {
             signature: trimmed.to_string(),
             description: String::new(),
             section: section.to_string(),
+                            ..Default::default()
         });
     }
 
@@ -361,6 +370,7 @@ fn parse_ts_member(line: &str, section: &str) -> Option<ReferenceEntry> {
                 signature: trimmed.to_string(),
                 description: String::new(),
                 section: section.to_string(),
+                            ..Default::default()
             });
         }
     }

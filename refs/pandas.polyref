@@ -1,0 +1,81 @@
+# ============================================================
+# Library: pandas
+# Version: 2.2
+# Lang: python
+# ============================================================
+@lang python
+
+@module pandas
+@module pandas.io
+@module pandas.errors
+
+@class DataFrame {
+    @method head(n: int = 5) -> DataFrame  [min_args=0, max_args=1]
+    @method tail(n: int = 5) -> DataFrame  [min_args=0, max_args=1]
+    @method describe(**kwargs) -> DataFrame  [min_args=0]
+    @method info(verbose: bool = True) -> None  [min_args=0]
+    @method to_csv(path_or_buf=None, **kwargs) -> str  [min_args=0]
+    @method to_json(path_or_buf=None, **kwargs) -> str  [min_args=0]
+    @method to_dict(orient: str = "dict") -> dict  [min_args=0]
+    @method groupby(by=None, **kwargs) -> DataFrameGroupBy  [min_args=0]
+    @method merge(right: DataFrame, **kwargs) -> DataFrame  [min_args=1]
+    @method join(other: DataFrame, **kwargs) -> DataFrame  [min_args=1]
+    @method sort_values(by: str, **kwargs) -> DataFrame  [min_args=1]
+    @method sort_index(**kwargs) -> DataFrame  [min_args=0]
+    @method drop(labels=None, **kwargs) -> DataFrame  [min_args=0]
+    @method dropna(**kwargs) -> DataFrame  [min_args=0]
+    @method fillna(value=None, **kwargs) -> DataFrame  [min_args=0]
+    @method apply(func, **kwargs) -> DataFrame  [min_args=1]
+    @method map(func, **kwargs) -> DataFrame  [min_args=1]
+    @method rename(**kwargs) -> DataFrame  [min_args=0]
+    @method reset_index(**kwargs) -> DataFrame  [min_args=0]
+    @method set_index(keys, **kwargs) -> DataFrame  [min_args=1]
+    @method iterrows() -> Iterator  [min_args=0, max_args=0]
+    @method itertuples(**kwargs) -> Iterator  [min_args=0]
+    @method copy(deep: bool = True) -> DataFrame  [min_args=0, max_args=1]
+    @method astype(dtype, **kwargs) -> DataFrame  [min_args=1]
+    @method value_counts(**kwargs) -> Series  [min_args=0]
+    @field columns: Index
+    @field index: Index
+    @field dtypes: Series
+    @field shape: tuple
+    @field values: ndarray
+    @field loc: _LocIndexer
+    @field iloc: _iLocIndexer
+    @field T: DataFrame
+}
+
+@class Series {
+    @method head(n: int = 5) -> Series  [min_args=0, max_args=1]
+    @method tail(n: int = 5) -> Series  [min_args=0, max_args=1]
+    @method mean(**kwargs) -> float  [min_args=0]
+    @method sum(**kwargs) -> float  [min_args=0]
+    @method min(**kwargs) -> float  [min_args=0]
+    @method max(**kwargs) -> float  [min_args=0]
+    @method std(**kwargs) -> float  [min_args=0]
+    @method value_counts(**kwargs) -> Series  [min_args=0]
+    @method to_list() -> list  [min_args=0, max_args=0]
+    @method tolist() -> list  [min_args=0, max_args=0]
+    @method apply(func, **kwargs) -> Series  [min_args=1]
+    @method map(arg, **kwargs) -> Series  [min_args=1]
+    @method astype(dtype, **kwargs) -> Series  [min_args=1]
+    @field values: ndarray
+    @field index: Index
+    @field dtype: dtype
+    @field name: str
+}
+
+@fn read_csv(filepath_or_buffer, **kwargs) -> DataFrame  [min_args=1]
+@fn read_json(path_or_buf=None, **kwargs) -> DataFrame  [min_args=0]
+@fn read_excel(io, **kwargs) -> DataFrame  [min_args=1]
+@fn read_sql(sql, con, **kwargs) -> DataFrame  [min_args=2]
+@fn read_parquet(path, **kwargs) -> DataFrame  [min_args=1]
+@fn concat(objs, **kwargs) -> DataFrame  [min_args=1]
+@fn merge(left, right, **kwargs) -> DataFrame  [min_args=2]
+@fn to_datetime(arg, **kwargs) -> DatetimeIndex  [min_args=1]
+@fn isna(obj) -> bool  [min_args=1, max_args=1]
+@fn notna(obj) -> bool  [min_args=1, max_args=1]
+
+@exception ParserError
+@exception EmptyDataError
+@exception DtypeWarning

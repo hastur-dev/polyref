@@ -1,3 +1,7 @@
 /target
 __pycache__/
 *.pyc
+.coverage
+.polyref-audit.jsonl
+polyref-100pct-enforcement-prompt.md
+polyref-haiku-generation-tests.md

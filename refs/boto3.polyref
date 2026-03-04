@@ -1,0 +1,44 @@
+# ============================================================
+# Library: boto3
+# Version: 1.35
+# Lang: python
+# ============================================================
+@lang python
+
+@module boto3
+@module boto3.session
+@module boto3.resources
+
+@class Session {
+    @method client(service_name: str, **kwargs) -> Client  [min_args=1]
+    @method resource(service_name: str, **kwargs) -> ServiceResource  [min_args=1]
+    @field region_name: str
+    @field available_profiles: list
+}
+
+@class Client {
+    @method get_paginator(operation_name: str) -> Paginator  [min_args=1, max_args=1]
+    @method get_waiter(waiter_name: str) -> Waiter  [min_args=1, max_args=1]
+    @method can_paginate(operation_name: str) -> bool  [min_args=1, max_args=1]
+    @method close() -> None  [min_args=0, max_args=0]
+}
+
+@class S3Client {
+    @method put_object(Bucket: str, Key: str, **kwargs) -> dict  [min_args=2]
+    @method get_object(Bucket: str, Key: str, **kwargs) -> dict  [min_args=2]
+    @method delete_object(Bucket: str, Key: str, **kwargs) -> dict  [min_args=2]
+    @method list_objects_v2(Bucket: str, **kwargs) -> dict  [min_args=1]
+    @method create_bucket(Bucket: str, **kwargs) -> dict  [min_args=1]
+    @method upload_file(Filename: str, Bucket: str, Key: str, **kwargs) -> None  [min_args=3]
+    @method download_file(Bucket: str, Key: str, Filename: str, **kwargs) -> None  [min_args=3]
+    @method generate_presigned_url(ClientMethod: str, **kwargs) -> str  [min_args=1]
+    @method head_object(Bucket: str, Key: str, **kwargs) -> dict  [min_args=2]
+}
+
+@fn client(service_name: str, **kwargs) -> Client  [min_args=1]
+@fn resource(service_name: str, **kwargs) -> ServiceResource  [min_args=1]
+
+@exception BotoCoreError
+@exception ClientError
+@exception NoCredentialsError
+@exception ParamValidationError

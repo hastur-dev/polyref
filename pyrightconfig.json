@@ -1,0 +1,7 @@
+{
+  "include": ["python", "tests/generation"],
+  "typeCheckingMode": "strict",
+  "reportMissingImports": true,
+  "reportMissingTypeStubs": false,
+  "pythonVersion": "3.11"
+}
