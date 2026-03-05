@@ -504,4 +504,4 @@ Tests are skipped automatically if `ANTHROPIC_API_KEY` is not set.
 
 ## License
 
-MIT
+PolyForm Noncommercial 1.0.0
