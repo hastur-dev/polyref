@@ -54,6 +54,146 @@ fn check_rust_file(
     content: &str,
     reference_files: &[ReferenceFile],
 ) -> Vec<Issue> {
+    // Try AST-first; fall back to regex on parse failure
+    match crate::ast::extract_calls_from_source(content) {
+        Ok(call_sites) => {
+            let mut issues = Vec::new();
+            let src_ctx = crate::source_context::build_source_context(content);
+            let relevant_refs =
+                crate::source_context::select_relevant_ref_files(&src_ctx, reference_files);
+            let all_entries: Vec<_> =
+                relevant_refs.iter().flat_map(|rf| rf.entries.iter()).cloned().collect();
+
+            for (line_num, line) in content.lines().enumerate() {
+                let line_num = line_num + 1;
+                let trimmed = line.trim();
+                if trimmed.is_empty() || trimmed.starts_with("//") {
+                    continue;
+                }
+                if trimmed.starts_with("use ") {
+                    check_rust_use_statement(
+                        file_path, line_num, trimmed, &relevant_refs, &mut issues,
+                    );
+                }
+                check_associated_patterns(
+                    file_path, trimmed, line_num, &relevant_refs, &all_entries, &mut issues,
+                );
+            }
+
+            // Validate method/function calls extracted by AST
+            check_call_sites(file_path, content, &call_sites, &relevant_refs, &mut issues);
+            issues
+        }
+        Err(_) => check_rust_file_regex(file_path, content, reference_files),
+    }
+}
+
+/// AST-based call site validation against reference files.
+fn check_call_sites(
+    file_path: &Path,
+    content: &str,
+    call_sites: &[crate::ast::CallSite],
+    relevant_refs: &[&ReferenceFile],
+    issues: &mut Vec<Issue>,
+) {
+    let all_methods = collect_all_methods(relevant_refs);
+    let all_entries: Vec<_> = relevant_refs.iter().flat_map(|rf| rf.entries.iter()).collect();
+    let lines: Vec<&str> = content.lines().collect();
+
+    for site in call_sites {
+        if site.call_type != crate::ast::CallType::MethodCall {
+            continue;
+        }
+        let line_str = lines
+            .get(site.line_number.saturating_sub(1))
+            .copied()
+            .unwrap_or("");
+
+        if all_methods.is_empty() {
+            continue;
+        }
+
+        if is_exact_method_match(&site.method_name, &all_methods) {
+            // Check arg count for known methods
+            if let Some(entry) = all_entries.iter().find(|e| {
+                e.name == site.method_name
+                    && (e.kind == EntryKind::Method || e.kind == EntryKind::Function)
+                    && (e.min_args.is_some() || e.max_args.is_some())
+            }) {
+                if let Some(min) = entry.min_args {
+                    if site.arg_count < min {
+                        issues.push(Issue {
+                            severity: Severity::Error,
+                            message: format!(
+                                "'{}' expects at least {} arg(s), got {}",
+                                site.method_name, min, site.arg_count
+                            ),
+                            file: file_path.to_path_buf(),
+                            line: site.line_number,
+                            column: None,
+                            code_snippet: line_str.to_string(),
+                            suggestion: Some(format!(
+                                "{} requires {} arg(s) minimum",
+                                site.method_name, min
+                            )),
+                            rule: "too-few-args".to_string(),
+                        });
+                    }
+                }
+                if let Some(max) = entry.max_args {
+                    if site.arg_count > max {
+                        issues.push(Issue {
+                            severity: Severity::Error,
+                            message: format!(
+                                "'{}' expects at most {} arg(s), got {}",
+                                site.method_name, max, site.arg_count
+                            ),
+                            file: file_path.to_path_buf(),
+                            line: site.line_number,
+                            column: None,
+                            code_snippet: line_str.to_string(),
+                            suggestion: Some(format!(
+                                "{} accepts {} arg(s) maximum",
+                                site.method_name, max
+                            )),
+                            rule: "too-many-args".to_string(),
+                        });
+                    }
+                }
+            }
+        } else {
+            // Unknown method — fuzzy match
+            let suggestion = find_best_method_suggestion(&site.method_name, &all_methods);
+            let suggestion_text = suggestion.as_ref().map_or_else(
+                || "no close match found — verify against docs".to_string(),
+                |s| {
+                    format!(
+                        "did you mean '{}'? (similarity: {:.2})",
+                        s,
+                        strsim::jaro_winkler(&site.method_name, s)
+                    )
+                },
+            );
+            issues.push(Issue {
+                severity: Severity::Error,
+                message: format!("'{}' is not a known method", site.method_name),
+                file: file_path.to_path_buf(),
+                line: site.line_number,
+                column: None,
+                code_snippet: line_str.to_string(),
+                suggestion: Some(suggestion_text),
+                rule: "unknown-method".to_string(),
+            });
+        }
+    }
+}
+
+/// Regex-based fallback for files that fail AST parsing.
+fn check_rust_file_regex(
+    file_path: &Path,
+    content: &str,
+    reference_files: &[ReferenceFile],
+) -> Vec<Issue> {
     let mut issues = Vec::new();
 
     let src_ctx = crate::source_context::build_source_context(content);

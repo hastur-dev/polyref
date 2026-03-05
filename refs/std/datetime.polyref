@@ -1,0 +1,51 @@
+# ============================================================
+# Library: datetime
+# Version: std
+# Lang: python
+# ============================================================
+@lang python
+
+@module datetime
+
+@class datetime {
+    @method __init__(self, year, month, day, hour=0, minute=0, second=0, microsecond=0) -> None  [min_args=3, max_args=7]
+    @method now(cls, tz=None) -> datetime  [min_args=0, max_args=1]
+    @method utcnow(cls) -> datetime  [min_args=0, max_args=0]
+    @method today(cls) -> datetime  [min_args=0, max_args=0]
+    @method fromtimestamp(cls, timestamp, tz=None) -> datetime  [min_args=1, max_args=2]
+    @method fromisoformat(cls, date_string) -> datetime  [min_args=1, max_args=1]
+    @method strptime(cls, date_string, format) -> datetime  [min_args=2, max_args=2]
+    @method strftime(self, format) -> str  [min_args=1, max_args=1]
+    @method isoformat(self, sep='T', timespec='auto') -> str  [min_args=0, max_args=2]
+    @method timestamp(self) -> float  [min_args=0, max_args=0]
+    @method date(self) -> date  [min_args=0, max_args=0]
+    @method time(self) -> time  [min_args=0, max_args=0]
+    @method replace(self, **kwargs) -> datetime  [min_args=0]
+    @method astimezone(self, tz=None) -> datetime  [min_args=0, max_args=1]
+    @field year: int
+    @field month: int
+    @field day: int
+    @field hour: int
+    @field minute: int
+    @field second: int
+    @field microsecond: int
+}
+
+@class date {
+    @method __init__(self, year, month, day) -> None  [min_args=3, max_args=3]
+    @method today(cls) -> date  [min_args=0, max_args=0]
+    @method fromisoformat(cls, date_string) -> date  [min_args=1, max_args=1]
+    @method strftime(self, format) -> str  [min_args=1, max_args=1]
+    @method isoformat(self) -> str  [min_args=0, max_args=0]
+    @field year: int
+    @field month: int
+    @field day: int
+}
+
+@class timedelta {
+    @method __init__(self, days=0, seconds=0, microseconds=0, milliseconds=0, minutes=0, hours=0, weeks=0) -> None  [min_args=0, max_args=7]
+    @method total_seconds(self) -> float  [min_args=0, max_args=0]
+    @field days: int
+    @field seconds: int
+    @field microseconds: int
+}

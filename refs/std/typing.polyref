@@ -1,0 +1,63 @@
+# ============================================================
+# Library: typing
+# Version: std
+# Lang: python
+# ============================================================
+@lang python
+
+@module typing
+
+@class List {
+}
+
+@class Dict {
+}
+
+@class Set {
+}
+
+@class Tuple {
+}
+
+@class Optional {
+}
+
+@class Union {
+}
+
+@class Any {
+}
+
+@class Callable {
+}
+
+@class Type {
+}
+
+@class Sequence {
+}
+
+@class Mapping {
+}
+
+@class Iterator {
+}
+
+@class Generator {
+}
+
+@class TypeVar {
+    @method __init__(self, name, *constraints, bound=None) -> None  [min_args=1]
+}
+
+@class Generic {
+}
+
+@class Protocol {
+}
+
+@fn cast(typ, val) -> Any  [min_args=2, max_args=2]
+@fn get_type_hints(obj) -> dict  [min_args=1, max_args=1]
+@fn overload(func) -> Callable  [min_args=1, max_args=1]
+@fn final(f) -> Callable  [min_args=1, max_args=1]
+@fn no_type_check(arg) -> Any  [min_args=1, max_args=1]

@@ -1,0 +1,21 @@
+# ============================================================
+# Library: react
+# Version: 18.2
+# Lang: typescript
+# ============================================================
+@lang typescript
+
+@module react
+
+@fn useState(initialState?: any) -> [any, Function]  [min_args=0, max_args=1]
+@fn useEffect(effect: Function, deps?: any[]) -> void  [min_args=1, max_args=2]
+@fn useContext(context: Context) -> any  [min_args=1, max_args=1]
+@fn useRef(initialValue?: any) -> MutableRefObject  [min_args=0, max_args=1]
+@fn useMemo(factory: Function, deps: any[]) -> any  [min_args=2, max_args=2]
+@fn useCallback(callback: Function, deps: any[]) -> Function  [min_args=2, max_args=2]
+@fn useReducer(reducer: Function, initialState: any, init?: Function) -> [any, Function]  [min_args=2, max_args=3]
+@fn createContext(defaultValue: any) -> Context  [min_args=1, max_args=1]
+@fn createElement(type: any, props?: object, ...children: any[]) -> ReactElement  [min_args=1]
+@fn forwardRef(render: Function) -> ForwardRefExoticComponent  [min_args=1, max_args=1]
+@fn memo(component: Function, areEqual?: Function) -> MemoExoticComponent  [min_args=1, max_args=2]
+@fn lazy(factory: Function) -> LazyExoticComponent  [min_args=1, max_args=1]

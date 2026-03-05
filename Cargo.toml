@@ -1,3 +1,8 @@
+[workspace]
+members = [".", "crate-ref-daemon", "crate-ref-hook"]
+exclude = ["tools/polyref-drift", "tools/polyref-gen"]
+resolver = "2"
+
 [package]
 name = "polyref"
 version = "0.1.0"
@@ -19,6 +24,9 @@ sha2 = "0.10"
 chrono = { version = "0.4", features = ["serde"] }
 ureq = "2"
 scraper = "0.21"
+syn = { version = "2.0", features = ["full", "visit"] }
+proc-macro2 = { version = "1.0", features = ["span-locations"] }
+thiserror = "2"
 
 [dev-dependencies]
 tempfile = "3"

@@ -1,0 +1,47 @@
+# ============================================================
+# Library: pathlib
+# Version: std
+# Lang: python
+# ============================================================
+@lang python
+
+@module pathlib
+
+@class Path {
+    @method __init__(self, *args) -> None  [min_args=0]
+    @method exists(self) -> bool  [min_args=0, max_args=0]
+    @method is_file(self) -> bool  [min_args=0, max_args=0]
+    @method is_dir(self) -> bool  [min_args=0, max_args=0]
+    @method mkdir(self, mode=0o777, parents=False, exist_ok=False) -> None  [min_args=0, max_args=3]
+    @method rmdir(self) -> None  [min_args=0, max_args=0]
+    @method unlink(self, missing_ok=False) -> None  [min_args=0, max_args=1]
+    @method rename(self, target) -> Path  [min_args=1, max_args=1]
+    @method glob(self, pattern) -> Generator  [min_args=1, max_args=1]
+    @method rglob(self, pattern) -> Generator  [min_args=1, max_args=1]
+    @method iterdir(self) -> Generator  [min_args=0, max_args=0]
+    @method read_text(self, encoding=None) -> str  [min_args=0, max_args=1]
+    @method read_bytes(self) -> bytes  [min_args=0, max_args=0]
+    @method write_text(self, data, encoding=None) -> int  [min_args=1, max_args=2]
+    @method write_bytes(self, data) -> int  [min_args=1, max_args=1]
+    @method resolve(self) -> Path  [min_args=0, max_args=0]
+    @method absolute(self) -> Path  [min_args=0, max_args=0]
+    @method joinpath(self, *args) -> Path  [min_args=0]
+    @method with_suffix(self, suffix) -> Path  [min_args=1, max_args=1]
+    @method with_name(self, name) -> Path  [min_args=1, max_args=1]
+    @method open(self, mode='r', buffering=-1) -> IO  [min_args=0, max_args=2]
+    @field parent: Path
+    @field name: str
+    @field stem: str
+    @field suffix: str
+    @field parts: tuple
+}
+
+@class PurePath {
+    @method __init__(self, *args) -> None  [min_args=0]
+    @method joinpath(self, *args) -> PurePath  [min_args=0]
+    @method with_suffix(self, suffix) -> PurePath  [min_args=1, max_args=1]
+    @field parent: PurePath
+    @field name: str
+    @field stem: str
+    @field suffix: str
+}

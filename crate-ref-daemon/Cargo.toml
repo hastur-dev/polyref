@@ -1,0 +1,26 @@
+[package]
+name = "crate-ref-daemon"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "crate-ref-daemon"
+path = "src/main.rs"
+
+[lib]
+name = "crate_ref_daemon"
+path = "src/lib.rs"
+
+[dependencies]
+anyhow = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["full"] }
+notify = "6"
+notify-debouncer-mini = "0.4"
+memmap2 = "0.9"
+clap = { version = "4", features = ["derive", "env"] }
+polyref = { path = ".." }
+
+[dev-dependencies]
+tempfile = "3"

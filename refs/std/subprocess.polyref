@@ -1,0 +1,40 @@
+# ============================================================
+# Library: subprocess
+# Version: std
+# Lang: python
+# ============================================================
+@lang python
+
+@module subprocess
+
+@fn run(args, **kwargs) -> CompletedProcess  [min_args=1]
+@fn call(args, **kwargs) -> int  [min_args=1]
+@fn check_call(args, **kwargs) -> int  [min_args=1]
+@fn check_output(args, **kwargs) -> bytes  [min_args=1]
+
+@class Popen {
+    @method __init__(self, args, **kwargs) -> None  [min_args=1]
+    @method communicate(self, input=None, timeout=None) -> tuple  [min_args=0, max_args=2]
+    @method wait(self, timeout=None) -> int  [min_args=0, max_args=1]
+    @method poll(self) -> int  [min_args=0, max_args=0]
+    @method kill(self) -> None  [min_args=0, max_args=0]
+    @method terminate(self) -> None  [min_args=0, max_args=0]
+    @method send_signal(self, signal) -> None  [min_args=1, max_args=1]
+    @field stdin: IO
+    @field stdout: IO
+    @field stderr: IO
+    @field pid: int
+    @field returncode: int
+}
+
+@class CompletedProcess {
+    @field args: Any
+    @field returncode: int
+    @field stdout: bytes
+    @field stderr: bytes
+    @method check_returncode(self) -> None  [min_args=0, max_args=0]
+}
+
+@exception CalledProcessError
+@exception TimeoutExpired
+@exception SubprocessError

@@ -11,3 +11,6 @@ pub mod type_inference;
 pub mod source_context;
 pub mod enforce;
 pub mod coverage;
+pub mod ast;
+pub mod commands;
+pub mod typescript_bridge;

@@ -1,0 +1,27 @@
+# ============================================================
+# Library: os
+# Version: std
+# Lang: python
+# ============================================================
+@lang python
+
+@module os
+@module os.path
+
+@fn getcwd() -> str  [min_args=0, max_args=0]
+@fn listdir(path='.') -> list  [min_args=0, max_args=1]
+@fn makedirs(name, mode=0o777, exist_ok=False) -> None  [min_args=1, max_args=3]
+@fn remove(path) -> None  [min_args=1, max_args=1]
+@fn rmdir(path) -> None  [min_args=1, max_args=1]
+@fn rename(src, dst) -> None  [min_args=2, max_args=2]
+@fn walk(top, topdown=True, onerror=None, followlinks=False) -> Generator  [min_args=1, max_args=4]
+@fn getenv(key, default=None) -> str  [min_args=1, max_args=2]
+@fn environ() -> Mapping  [min_args=0, max_args=0]
+@fn path.join(path, *paths) -> str  [min_args=1]
+@fn path.exists(path) -> bool  [min_args=1, max_args=1]
+@fn path.isfile(path) -> bool  [min_args=1, max_args=1]
+@fn path.isdir(path) -> bool  [min_args=1, max_args=1]
+@fn path.basename(path) -> str  [min_args=1, max_args=1]
+@fn path.dirname(path) -> str  [min_args=1, max_args=1]
+@fn path.splitext(path) -> tuple  [min_args=1, max_args=1]
+@fn path.abspath(path) -> str  [min_args=1, max_args=1]

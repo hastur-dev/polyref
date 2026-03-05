@@ -1,0 +1,44 @@
+# ============================================================
+# Library: zod
+# Version: 3.22
+# Lang: typescript
+# ============================================================
+@lang typescript
+
+@module zod
+
+@class ZodType {
+    @method parse(data: unknown) -> T  [min_args=1, max_args=1]
+    @method safeParse(data: unknown) -> SafeParseResult  [min_args=1, max_args=1]
+    @method optional() -> ZodOptional  [min_args=0, max_args=0]
+    @method nullable() -> ZodNullable  [min_args=0, max_args=0]
+    @method default(def: T) -> ZodDefault  [min_args=1, max_args=1]
+    @method transform(fn: Function) -> ZodEffects  [min_args=1, max_args=1]
+    @method refine(check: Function, message?: string) -> ZodEffects  [min_args=1, max_args=2]
+    @method array() -> ZodArray  [min_args=0, max_args=0]
+    @method or(schema: ZodType) -> ZodUnion  [min_args=1, max_args=1]
+    @method and(schema: ZodType) -> ZodIntersection  [min_args=1, max_args=1]
+}
+
+@class ZodObject {
+    @method extend(augmentation: object) -> ZodObject  [min_args=1, max_args=1]
+    @method merge(other: ZodObject) -> ZodObject  [min_args=1, max_args=1]
+    @method pick(mask: object) -> ZodObject  [min_args=1, max_args=1]
+    @method omit(mask: object) -> ZodObject  [min_args=1, max_args=1]
+    @method partial() -> ZodObject  [min_args=0, max_args=0]
+    @method strict() -> ZodObject  [min_args=0, max_args=0]
+    @method passthrough() -> ZodObject  [min_args=0, max_args=0]
+    @method strip() -> ZodObject  [min_args=0, max_args=0]
+}
+
+@fn string() -> ZodString  [min_args=0, max_args=0]
+@fn number() -> ZodNumber  [min_args=0, max_args=0]
+@fn boolean() -> ZodBoolean  [min_args=0, max_args=0]
+@fn object(shape: object) -> ZodObject  [min_args=1, max_args=1]
+@fn array(schema: ZodType) -> ZodArray  [min_args=1, max_args=1]
+@fn enum(values: string[]) -> ZodEnum  [min_args=1, max_args=1]
+@fn union(types: ZodType[]) -> ZodUnion  [min_args=1, max_args=1]
+@fn literal(value: any) -> ZodLiteral  [min_args=1, max_args=1]
+@fn tuple(items: ZodType[]) -> ZodTuple  [min_args=1, max_args=1]
+@fn record(valueType: ZodType) -> ZodRecord  [min_args=1, max_args=1]
+@fn infer() -> never  [min_args=0, max_args=0]

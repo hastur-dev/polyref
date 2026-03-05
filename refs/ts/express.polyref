@@ -1,0 +1,48 @@
+# ============================================================
+# Library: express
+# Version: 4.18
+# Lang: typescript
+# ============================================================
+@lang typescript
+
+@module express
+
+@class Application {
+    @method listen(port: number, callback?: Function) -> Server  [min_args=1, max_args=2]
+    @method get(path: string, ...handlers: Function[]) -> Application  [min_args=1]
+    @method post(path: string, ...handlers: Function[]) -> Application  [min_args=1]
+    @method put(path: string, ...handlers: Function[]) -> Application  [min_args=1]
+    @method delete(path: string, ...handlers: Function[]) -> Application  [min_args=1]
+    @method use(...handlers: Function[]) -> Application  [min_args=0]
+    @method set(setting: string, val: any) -> Application  [min_args=2, max_args=2]
+    @field locals: Record<string, any>
+}
+
+@class Request {
+    @field body: any
+    @field params: Record<string, string>
+    @field query: Record<string, string>
+    @field headers: Record<string, string>
+    @field method: string
+    @field url: string
+    @field path: string
+}
+
+@class Response {
+    @method json(body: any) -> Response  [min_args=1, max_args=1]
+    @method send(body?: any) -> Response  [min_args=0, max_args=1]
+    @method status(code: number) -> Response  [min_args=1, max_args=1]
+    @method redirect(url: string) -> void  [min_args=1, max_args=1]
+    @method render(view: string, locals?: object) -> void  [min_args=1, max_args=2]
+    @method cookie(name: string, val: string, options?: object) -> Response  [min_args=2, max_args=3]
+    @method clearCookie(name: string, options?: object) -> Response  [min_args=1, max_args=2]
+    @method type(type: string) -> Response  [min_args=1, max_args=1]
+}
+
+@class Router {
+    @method get(path: string, ...handlers: Function[]) -> Router  [min_args=1]
+    @method post(path: string, ...handlers: Function[]) -> Router  [min_args=1]
+    @method use(...handlers: Function[]) -> Router  [min_args=0]
+}
+
+@fn express() -> Application  [min_args=0, max_args=0]

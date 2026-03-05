@@ -1,0 +1,28 @@
+# ============================================================
+# Library: lodash
+# Version: 4.17
+# Lang: typescript
+# ============================================================
+@lang typescript
+
+@module lodash
+
+@fn map(collection: any, iteratee: Function) -> any[]  [min_args=2, max_args=2]
+@fn filter(collection: any, predicate: Function) -> any[]  [min_args=2, max_args=2]
+@fn find(collection: any, predicate: Function) -> any  [min_args=2, max_args=2]
+@fn reduce(collection: any, iteratee: Function, accumulator?: any) -> any  [min_args=2, max_args=3]
+@fn forEach(collection: any, iteratee: Function) -> any  [min_args=2, max_args=2]
+@fn groupBy(collection: any, iteratee: Function) -> object  [min_args=2, max_args=2]
+@fn sortBy(collection: any, iteratees: Function[]) -> any[]  [min_args=1, max_args=2]
+@fn uniq(array: any[]) -> any[]  [min_args=1, max_args=1]
+@fn flatten(array: any[]) -> any[]  [min_args=1, max_args=1]
+@fn flattenDeep(array: any[]) -> any[]  [min_args=1, max_args=1]
+@fn chunk(array: any[], size?: number) -> any[][]  [min_args=1, max_args=2]
+@fn debounce(func: Function, wait?: number, options?: object) -> Function  [min_args=1, max_args=3]
+@fn throttle(func: Function, wait?: number, options?: object) -> Function  [min_args=1, max_args=3]
+@fn cloneDeep(value: any) -> any  [min_args=1, max_args=1]
+@fn merge(object: object, ...sources: object[]) -> object  [min_args=1]
+@fn isEmpty(value: any) -> boolean  [min_args=1, max_args=1]
+@fn isEqual(value: any, other: any) -> boolean  [min_args=2, max_args=2]
+@fn get(object: object, path: string, defaultValue?: any) -> any  [min_args=2, max_args=3]
+@fn set(object: object, path: string, value: any) -> object  [min_args=3, max_args=3]

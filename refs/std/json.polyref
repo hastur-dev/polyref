@@ -1,0 +1,27 @@
+# ============================================================
+# Library: json
+# Version: std
+# Lang: python
+# ============================================================
+@lang python
+
+@module json
+
+@fn dumps(obj, **kwargs) -> str  [min_args=1]
+@fn loads(s, **kwargs) -> Any  [min_args=1]
+@fn dump(obj, fp, **kwargs) -> None  [min_args=2]
+@fn load(fp, **kwargs) -> Any  [min_args=1]
+
+@class JSONEncoder {
+    @method __init__(self, **kwargs) -> None  [min_args=0]
+    @method encode(self, o) -> str  [min_args=1, max_args=1]
+    @method default(self, o) -> Any  [min_args=1, max_args=1]
+}
+
+@class JSONDecoder {
+    @method __init__(self, **kwargs) -> None  [min_args=0]
+    @method decode(self, s) -> Any  [min_args=1, max_args=1]
+    @method raw_decode(self, s, idx=0) -> tuple  [min_args=1, max_args=2]
+}
+
+@exception JSONDecodeError

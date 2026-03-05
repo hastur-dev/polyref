@@ -1,0 +1,34 @@
+# ============================================================
+# Library: axios
+# Version: 1.7
+# Lang: typescript
+# ============================================================
+@lang typescript
+
+@module axios
+
+@fn get(url: string, config?: AxiosRequestConfig) -> Promise<AxiosResponse>  [min_args=1, max_args=2]
+@fn post(url: string, data?: any, config?: AxiosRequestConfig) -> Promise<AxiosResponse>  [min_args=1, max_args=3]
+@fn put(url: string, data?: any, config?: AxiosRequestConfig) -> Promise<AxiosResponse>  [min_args=1, max_args=3]
+@fn delete(url: string, config?: AxiosRequestConfig) -> Promise<AxiosResponse>  [min_args=1, max_args=2]
+@fn create(config?: AxiosRequestConfig) -> AxiosInstance  [min_args=0, max_args=1]
+
+@class AxiosInstance {
+    @method get(url: string, config?: AxiosRequestConfig) -> Promise<AxiosResponse>  [min_args=1, max_args=2]
+    @method post(url: string, data?: any, config?: AxiosRequestConfig) -> Promise<AxiosResponse>  [min_args=1, max_args=3]
+    @method put(url: string, data?: any, config?: AxiosRequestConfig) -> Promise<AxiosResponse>  [min_args=1, max_args=3]
+    @method delete(url: string, config?: AxiosRequestConfig) -> Promise<AxiosResponse>  [min_args=1, max_args=2]
+    @method request(config: AxiosRequestConfig) -> Promise<AxiosResponse>  [min_args=1, max_args=1]
+    @field interceptors: { request: AxiosInterceptorManager, response: AxiosInterceptorManager }
+    @field defaults: AxiosDefaults
+}
+
+@class AxiosResponse {
+    @field data: any
+    @field status: number
+    @field statusText: string
+    @field headers: Record<string, string>
+    @field config: AxiosRequestConfig
+}
+
+@exception AxiosError

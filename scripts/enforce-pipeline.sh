@@ -64,6 +64,32 @@ if command -v cargo-audit &>/dev/null; then
     fi
 fi
 
+# Layer 5: security check
+echo "--- Layer 5: security check ---"
+if [ -f "$PROJECT_ROOT/scripts/security-check.sh" ]; then
+    if ! bash "$PROJECT_ROOT/scripts/security-check.sh" 2>/dev/null; then
+        FAILED_LAYER="${FAILED_LAYER:+$FAILED_LAYER, }security"
+    fi
+fi
+
+# Layer 6: test lint (anti-tautology)
+echo "--- Layer 6: test lint ---"
+if [ -f "$PROJECT_ROOT/scripts/lint-tests.sh" ]; then
+    if ! bash "$PROJECT_ROOT/scripts/lint-tests.sh" 2>/dev/null; then
+        FAILED_LAYER="${FAILED_LAYER:+$FAILED_LAYER, }test-lint"
+    fi
+fi
+
+# Layer 7: cargo test
+if [ "$LANG_HINT" = "rust" ] || [ "$LANG_HINT" = "auto" ]; then
+    echo "--- Layer 7: cargo test ---"
+    if [ -f "$PROJECT_ROOT/Cargo.toml" ]; then
+        if ! cargo test --manifest-path "$PROJECT_ROOT/Cargo.toml" --quiet 2>/dev/null; then
+            FAILED_LAYER="${FAILED_LAYER:+$FAILED_LAYER, }cargo-test"
+        fi
+    fi
+fi
+
 # Report result
 if [ -n "$FAILED_LAYER" ]; then
     echo "BLOCKED: Failed layer(s): $FAILED_LAYER" >&2

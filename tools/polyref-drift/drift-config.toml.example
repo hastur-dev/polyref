@@ -1,0 +1,23 @@
+# polyref-drift configuration
+# Copy to drift-config.toml and customize
+
+# Directories containing reference files to check
+refs_dirs = ["refs"]
+
+# Maximum age in days before a ref file is considered stale
+max_age_days = 30
+
+# HTTP proxy (uncomment if needed)
+# http_proxy = "http://proxy.example.com:8080"
+
+# Libraries to skip drift checking
+skip = []
+
+# Output format: "terminal" or "json"
+output = "terminal"
+
+# Registry configuration
+[registries]
+crates_io = true
+pypi = true
+npm = true

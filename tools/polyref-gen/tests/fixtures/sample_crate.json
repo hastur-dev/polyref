@@ -1,0 +1,186 @@
+{
+  "root": "0:0:0",
+  "crate_version": "1.2.3",
+  "includes_private": false,
+  "index": {
+    "0:0:0": {
+      "id": "0:0:0",
+      "crate_id": 0,
+      "name": "sample_crate",
+      "span": null,
+      "visibility": "public",
+      "docs": "A sample crate for testing.",
+      "attrs": [],
+      "inner": {
+        "module": {
+          "is_crate": true,
+          "items": ["0:1:0", "0:2:0", "0:3:0"]
+        }
+      }
+    },
+    "0:1:0": {
+      "id": "0:1:0",
+      "crate_id": 0,
+      "name": "add",
+      "span": null,
+      "visibility": "public",
+      "docs": "Add two numbers.",
+      "attrs": [],
+      "inner": {
+        "function": {
+          "sig": {
+            "inputs": [
+              ["a", {"primitive": "i32"}],
+              ["b", {"primitive": "i32"}]
+            ],
+            "output": {"primitive": "i32"}
+          },
+          "generics": {"params": [], "where_predicates": []},
+          "header": {"is_unsafe": false, "is_const": false, "is_async": false},
+          "has_body": true
+        }
+      }
+    },
+    "0:2:0": {
+      "id": "0:2:0",
+      "crate_id": 0,
+      "name": "MyStruct",
+      "span": null,
+      "visibility": "public",
+      "docs": "A sample struct.",
+      "attrs": [],
+      "inner": {
+        "struct": {
+          "kind": {"plain": {"fields": ["0:4:0"], "has_stripped_fields": false}},
+          "generics": {"params": [], "where_predicates": []},
+          "impls": ["0:5:0"]
+        }
+      }
+    },
+    "0:3:0": {
+      "id": "0:3:0",
+      "crate_id": 0,
+      "name": "MyEnum",
+      "span": null,
+      "visibility": "public",
+      "docs": "A sample enum.",
+      "attrs": [],
+      "inner": {
+        "enum": {
+          "generics": {"params": [], "where_predicates": []},
+          "variants": ["0:6:0", "0:7:0"],
+          "impls": []
+        }
+      }
+    },
+    "0:4:0": {
+      "id": "0:4:0",
+      "crate_id": 0,
+      "name": "value",
+      "span": null,
+      "visibility": "public",
+      "docs": "The inner value.",
+      "attrs": [],
+      "inner": {
+        "struct_field": {"primitive": "i32"}
+      }
+    },
+    "0:5:0": {
+      "id": "0:5:0",
+      "crate_id": 0,
+      "name": null,
+      "span": null,
+      "visibility": "public",
+      "docs": null,
+      "attrs": [],
+      "inner": {
+        "impl": {
+          "is_unsafe": false,
+          "generics": {"params": [], "where_predicates": []},
+          "provided_trait_methods": [],
+          "trait_": null,
+          "for_": {"resolved_path": {"name": "MyStruct", "id": "0:2:0", "args": null}},
+          "items": ["0:8:0", "0:9:0"],
+          "is_negative": false,
+          "is_synthetic": false,
+          "blanket_impl": null
+        }
+      }
+    },
+    "0:6:0": {
+      "id": "0:6:0",
+      "crate_id": 0,
+      "name": "A",
+      "span": null,
+      "visibility": "public",
+      "docs": "Variant A.",
+      "attrs": [],
+      "inner": {
+        "variant": {"kind": "plain"}
+      }
+    },
+    "0:7:0": {
+      "id": "0:7:0",
+      "crate_id": 0,
+      "name": "B",
+      "span": null,
+      "visibility": "public",
+      "docs": "Variant B with data.",
+      "attrs": [],
+      "inner": {
+        "variant": {"kind": {"tuple": [{"primitive": "String"}]}}
+      }
+    },
+    "0:8:0": {
+      "id": "0:8:0",
+      "crate_id": 0,
+      "name": "new",
+      "span": null,
+      "visibility": "public",
+      "docs": "Create a new MyStruct.",
+      "attrs": [],
+      "inner": {
+        "function": {
+          "sig": {
+            "inputs": [
+              ["value", {"primitive": "i32"}]
+            ],
+            "output": {"resolved_path": {"name": "MyStruct", "id": "0:2:0", "args": null}}
+          },
+          "generics": {"params": [], "where_predicates": []},
+          "header": {"is_unsafe": false, "is_const": false, "is_async": false},
+          "has_body": true
+        }
+      }
+    },
+    "0:9:0": {
+      "id": "0:9:0",
+      "crate_id": 0,
+      "name": "get_value",
+      "span": null,
+      "visibility": "public",
+      "docs": "Get the inner value.",
+      "attrs": [],
+      "inner": {
+        "function": {
+          "sig": {
+            "inputs": [
+              ["self", {"borrowed_ref": {"lifetime": null, "mutable": false, "type_": {"generic": "Self"}}}]
+            ],
+            "output": {"primitive": "i32"}
+          },
+          "generics": {"params": [], "where_predicates": []},
+          "header": {"is_unsafe": false, "is_const": false, "is_async": false},
+          "has_body": true
+        }
+      }
+    }
+  },
+  "paths": {
+    "0:0:0": {"crate_id": 0, "path": ["sample_crate"], "kind": "module"},
+    "0:2:0": {"crate_id": 0, "path": ["sample_crate", "MyStruct"], "kind": "struct"},
+    "0:3:0": {"crate_id": 0, "path": ["sample_crate", "MyEnum"], "kind": "enum"}
+  },
+  "external_crates": {},
+  "format_version": 28
+}
