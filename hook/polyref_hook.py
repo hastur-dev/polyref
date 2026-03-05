@@ -55,6 +55,7 @@ def run_polyref(args, cwd="."):
     """Run polyref with given args in cwd, return parsed JSON output."""
     binary = get_polyref_binary()
     if not binary:
+        print("Warning: polyref binary not found", file=sys.stderr)
         return None
 
     cmd = [binary, "--output", "json", "--project", cwd] + args
@@ -67,13 +68,16 @@ def run_polyref(args, cwd="."):
         print(f"polyref unavailable: {e}", file=sys.stderr)
         return None
 
-    if result.returncode != 0 and result.stderr:
-        print(f"polyref error: {result.stderr.strip()}", file=sys.stderr)
+    if result.returncode != 0:
+        if result.stderr:
+            print(f"polyref error (code {result.returncode}): {result.stderr.strip()}", file=sys.stderr)
+        return None
 
     if result.stdout.strip():
         try:
             return json.loads(result.stdout)
-        except json.JSONDecodeError:
+        except json.JSONDecodeError as e:
+            print(f"polyref output invalid JSON: {e}", file=sys.stderr)
             return None
     return None
 
@@ -149,8 +153,13 @@ After you edit a manifest file (Cargo.toml, package.json, etc.), polyref will au
 
 def on_post_tool_use(input_data):
     """Validate changed files after Write/Edit tool use."""
-    file_path = input_data.get("tool_input", {}).get("file_path", "")
+    # Claude Code passes file_path directly in input_data, not nested in tool_input
+    file_path = input_data.get("file_path", "")
     if not file_path:
+        # Try alternate location (tool_input.file_path)
+        file_path = input_data.get("tool_input", {}).get("file_path", "")
+    if not file_path:
+        # Silent exit if no file_path found
         sys.exit(0)
 
     cwd = input_data.get("cwd", os.getcwd())
@@ -257,7 +266,8 @@ def main():
     """Entry point — reads event JSON from stdin, dispatches to handler."""
     try:
         input_data = json.load(sys.stdin)
-    except (json.JSONDecodeError, EOFError):
+    except (json.JSONDecodeError, EOFError) as e:
+        print(f"Failed to parse hook input JSON: {e}", file=sys.stderr)
         input_data = {}
 
     # Event type comes from argv (Claude Code passes it as the command suffix)
@@ -275,8 +285,15 @@ def main():
 
     handler = handlers.get(event_type)
     if handler:
-        handler(input_data)
-    # Unknown events silently exit 0
+        try:
+            handler(input_data)
+        except Exception as e:
+            print(f"Hook handler error ({event_type}): {e}", file=sys.stderr)
+            import traceback
+            traceback.print_exc(file=sys.stderr)
+    else:
+        print(f"Unknown event type: {event_type}", file=sys.stderr)
+    # Exit 0 even on errors to avoid blocking Claude Code
     sys.exit(0)
 
 

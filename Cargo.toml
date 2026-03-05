@@ -8,6 +8,7 @@ name = "polyref"
 version = "0.1.0"
 edition = "2021"
 description = "Multi-language library reference generator and code validator"
+license = "LicenseRef-Polyform-Noncommercial-1.0.0"
 
 [dependencies]
 clap = { version = "4", features = ["derive"] }
