@@ -92,13 +92,24 @@ pub fn cmd_enforce(
     lang: &str,
     refs_override: Option<&str>,
     global_refs_override: Option<&str>,
+    strip_fences: bool,
 ) -> anyhow::Result<()> {
     let config =
         build_enforce_config_from_args(enforce, strict, require_coverage, from_stdin, output_format);
     config.validate().map_err(|e| anyhow::anyhow!(e))?;
 
-    let (content, display_path) =
+    let (mut content, display_path) =
         read_source_input(if from_stdin { None } else { Some(project) }, from_stdin)?;
+
+    // Check if strip_fences should be enabled from config or CLI
+    let project_root = Path::new(project);
+    let toml_config = Config::load(project_root).unwrap_or_default();
+    let should_strip_fences = strip_fences || toml_config.model.strip_fences == Some(true);
+
+    // Apply fence stripping if enabled
+    if should_strip_fences {
+        content = crate::model_output::extract_code_from_model_output(&content, lang);
+    }
 
     let language = detect_language_from_content(&content, lang);
 

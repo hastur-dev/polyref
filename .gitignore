@@ -5,3 +5,4 @@ __pycache__/
 .polyref-audit.jsonl
 polyref-100pct-enforcement-prompt.md
 polyref-haiku-generation-tests.md
+refs/generated/

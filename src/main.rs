@@ -101,6 +101,9 @@ enum Commands {
         /// Reference files directory
         #[arg(long, value_name = "DIR")]
         refs: Option<String>,
+        /// Strip markdown code fences from input (for raw model output)
+        #[arg(long)]
+        strip_fences: bool,
     },
 }
 
@@ -125,6 +128,7 @@ fn main() -> anyhow::Result<()> {
             output_format,
             lang,
             refs,
+            strip_fences,
         }) => polyref::commands::enforce::cmd_enforce(
             &project,
             enforce,
@@ -135,6 +139,7 @@ fn main() -> anyhow::Result<()> {
             &lang,
             refs.as_deref(),
             global_refs,
+            strip_fences,
         ),
         None => {
             println!("No command specified. Use --help for usage.");
@@ -292,9 +297,13 @@ use_cache = true
 # Maximum age of cached files in hours (168 = 1 week)
 cache_max_age_hours = 168
 
-# Optional: global directory of existing reference files (flat layout)
-# If set, polyref checks this directory before generating stubs
-# global_refs_dir = "C:/Users/you/Documents/coding/references"
+# Global reference file directory. Polyref checks here before generating stubs.
+# If not set, defaults to the OS temp directory:
+#   Linux:   /tmp/polyref/refs
+#   macOS:   $TMPDIR/polyref/refs
+#   Windows: %TEMP%/polyref/refs
+# Override with POLYREF_DATA_DIR env var.
+# global_refs_dir = "/path/to/your/refs"
 "#;
 
     std::fs::write(&config_path, default_config)?;

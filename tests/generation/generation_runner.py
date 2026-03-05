@@ -10,7 +10,7 @@ from pydantic import BaseModel, ConfigDict
 from rich.progress import Progress
 
 from .code_extractor import extract_code_or_raw
-from .haiku_client import HaikuClient
+from .model_client import ModelClient
 
 logger = logging.getLogger(__name__)
 
@@ -35,7 +35,7 @@ def _lang_hint(lang: str) -> str:
 
 
 def run_generation_batch(
-    client: HaikuClient,
+    client: ModelClient,
     prompt: str,
     prompt_id: str,
     refs: list[ReferenceFile],

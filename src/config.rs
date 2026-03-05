@@ -2,6 +2,19 @@ use crate::detect::Language;
 use std::path::PathBuf;
 
 #[derive(Debug, Clone, serde::Deserialize, serde::Serialize)]
+pub struct ModelConfig {
+    /// Strip markdown code fences from input (for raw model output)
+    #[serde(default)]
+    pub strip_fences: Option<bool>,
+}
+
+impl Default for ModelConfig {
+    fn default() -> Self {
+        Self { strip_fences: None }
+    }
+}
+
+#[derive(Debug, Clone, serde::Deserialize, serde::Serialize)]
 pub struct Config {
     /// Project root directory
     #[serde(default = "default_project_root")]
@@ -27,6 +40,9 @@ pub struct Config {
     /// Optional global directory of flat reference files (e.g. coding/references/)
     #[serde(default)]
     pub global_refs_dir: Option<PathBuf>,
+    /// Model input/output configuration
+    #[serde(default)]
+    pub model: ModelConfig,
 }
 
 fn default_project_root() -> PathBuf {
@@ -66,6 +82,7 @@ impl Default for Config {
             use_cache: true,
             cache_max_age_hours: 168,
             global_refs_dir: None,
+            model: ModelConfig::default(),
         }
     }
 }
@@ -96,14 +113,20 @@ impl Config {
         }
     }
 
-    /// Resolve global_refs_dir (if set). Relative paths resolve against project_root.
+    /// Resolve global_refs_dir. Resolution order:
+    /// 1. Explicit `global_refs_dir` in polyref.toml (relative paths resolve against project_root)
+    /// 2. System data directory (e.g. `~/.local/share/polyref/refs` on Linux)
     pub fn resolved_global_refs_dir(&self) -> Option<PathBuf> {
-        self.global_refs_dir.as_ref().map(|dir| {
-            if dir.is_relative() {
+        if let Some(dir) = &self.global_refs_dir {
+            let resolved = if dir.is_relative() {
                 self.project_root.join(dir)
             } else {
                 dir.clone()
-            }
-        })
+            };
+            return Some(resolved);
+        }
+
+        // Fall back to system data directory
+        crate::dirs::global_refs_dir()
     }
 }

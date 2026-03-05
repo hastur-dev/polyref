@@ -1,5 +1,5 @@
 use clap::{Parser, Subcommand};
-use polyref_gen::{python_gen, python_source_gen, rust_source_gen, rustdoc_gen, scanner, typescript_gen};
+use polyref_gen::{dirs, python_gen, python_source_gen, rust_source_gen, rustdoc_gen, scanner, typescript_gen};
 use std::path::Path;
 
 #[derive(Parser, Debug)]
@@ -61,9 +61,12 @@ enum Commands {
         /// Directories to scan for projects (can specify multiple)
         #[arg(short, long, required = true, num_args = 1..)]
         dirs: Vec<String>,
-        /// Output directory for generated reference files
-        #[arg(short, long, default_value = "refs")]
-        output_dir: String,
+        /// Output directory for generated reference files.
+        /// Defaults to the OS temp directory (e.g. /tmp/polyref/refs
+        /// on Linux, %TEMP%/polyref/refs on Windows).
+        /// Override with POLYREF_DATA_DIR env var.
+        #[arg(short, long)]
+        output_dir: Option<String>,
     },
 }
 
@@ -97,7 +100,20 @@ fn main() -> anyhow::Result<()> {
             write_output(&content, output.as_deref())?;
         }
         Commands::Scan { dirs, output_dir } => {
-            let output_path = Path::new(&output_dir);
+            let resolved_output_dir = match &output_dir {
+                Some(d) => d.clone(),
+                None => {
+                    match dirs::default_refs_output_dir() {
+                        Some(d) => d.to_string_lossy().to_string(),
+                        None => {
+                            eprintln!("Error: Could not determine default output directory.");
+                            eprintln!("Set POLYREF_DATA_DIR or pass --output-dir explicitly.");
+                            std::process::exit(1);
+                        }
+                    }
+                }
+            };
+            let output_path = Path::new(&resolved_output_dir);
             let mut all_projects = Vec::new();
 
             for dir in &dirs {

@@ -14,3 +14,5 @@ pub mod coverage;
 pub mod ast;
 pub mod commands;
 pub mod typescript_bridge;
+pub mod dirs;
+pub mod model_output;

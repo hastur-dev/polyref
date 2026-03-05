@@ -249,7 +249,11 @@ skip_libraries = ["tokio", "serde", "anyhow"]
 fn test_config_default_global_refs_dir_none() {
     let config = Config::default();
     assert!(config.global_refs_dir.is_none());
-    assert!(config.resolved_global_refs_dir().is_none());
+    // When not explicitly set, resolved_global_refs_dir falls back to system data dir
+    let resolved = config.resolved_global_refs_dir();
+    assert!(resolved.is_some());
+    let path = resolved.unwrap();
+    assert!(path.to_string_lossy().contains("polyref"));
 }
 
 #[test]
@@ -296,5 +300,9 @@ refs_dir = "refs"
     std::fs::write(tmp.path().join("polyref.toml"), config_content).unwrap();
     let config = Config::load(tmp.path()).unwrap();
     assert!(config.global_refs_dir.is_none());
-    assert!(config.resolved_global_refs_dir().is_none());
+    // Falls back to OS temp dir when not explicitly configured
+    let resolved = config.resolved_global_refs_dir();
+    assert!(resolved.is_some());
+    let path = resolved.unwrap();
+    assert!(path.to_string_lossy().contains("polyref"));
 }

@@ -11,8 +11,19 @@ from polyref_py.models import ReferenceFile
 from polyref_py.ref_parser import load_reference_file
 
 from .haiku_client import HaikuClient
+from .model_client import ModelClient, create_model_client
 
 _REFS_DIR = Path(__file__).resolve().parent.parent.parent / "refs"
+
+
+@pytest.fixture(scope="session")
+def model_client() -> ModelClient:
+    """Create a ModelClient using env vars. Supports any provider (Anthropic, OpenAI, Ollama)."""
+    load_dotenv()
+    try:
+        return create_model_client()
+    except ValueError as e:
+        pytest.skip(f"Model client initialization failed: {e}")
 
 
 @pytest.fixture(scope="session")
